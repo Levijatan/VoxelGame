@@ -38,11 +38,11 @@ fn setup(
     mut shaders: ResMut<Assets<Shader>>,
     mut render_graph: ResMut<RenderGraph>,
 ) {
-    render_graph.add_system_node("chunk_uniform", AssetRenderResourcesNode::<chunk::ChunkUniform>::new(false));
+    render_graph.add_system_node("chunk_uniform", AssetRenderResourcesNode::<chunk::ChunkUniform>::new(true));
     render_graph.add_node_edge("chunk_uniform", base::node::MAIN_PASS).unwrap();
 
-    render_graph.add_system_node("chunk_material", RenderResourcesNode::<chunk::ChunkMaterial>::new(false));
-    render_graph.add_node_edge("chunk_material", base::node::MAIN_PASS).unwrap();
+    render_graph.add_system_node("chunk_instances", RenderResourcesNode::<chunk::ChunkInstances>::new(false));
+    render_graph.add_node_edge("chunk_instances", base::node::MAIN_PASS).unwrap();
 
     let mut pipeline = PipelineDescriptor::default_config(ShaderStages {
         vertex: shaders.add(Shader::from_glsl(ShaderStage::Vertex, VERTEX_SHADER)),

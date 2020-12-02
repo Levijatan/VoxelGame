@@ -9,6 +9,7 @@ edition = "2018"
 [dependencies]
 control = { path = "./crates/control" }
 geom = { path = "./crates/geom" }
+util = { path = "./crates/util" }
 bevy = { git = "https://github.com/bevyengine/bevy" }
 rand = "0.7.3"
 

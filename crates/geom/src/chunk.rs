@@ -1,14 +1,16 @@
 use std::ops::Deref;
 
-use bevy::{asset::{Assets, Handle}, core::Byteable, render::mesh::Indices, ecs::{ResMut, Query}, math::Vec4, render::{
+use bevy::{asset::{Assets, Handle}, core::Byteable, prelude::Texture, ecs::{ResMut, Query}, math::Vec4, render::{
+        mesh::Indices,
         renderer::{RenderResources, RenderResource},
         camera::Camera,
         mesh::Mesh,
+        color::Color,
     }, transform::components::GlobalTransform, type_registry::TypeUuid};
 use building_blocks::core::{Point3i, PointN};
 
 pub const NUM_CUBE_VERTICES: usize = 8;
-pub const NUM_CUBE_INDICES: usize = 3 * 3 * 2;
+pub const NUM_CUBE_INDICES: usize = 3 * 6 * 2;
 
 const CUBE_INDICIES: [u32; 36] = [
     0, 2, 1, 2, 3, 1,
@@ -44,10 +46,11 @@ pub fn chunk_indices(chunk_shape: Point3i) -> Vec<u32> {
 
 #[derive(RenderResources, RenderResource, Default, TypeUuid)]
 #[uuid = "d10816cf-cd32-404e-92dd-0f72400ecc4b"]
-#[render_resources(from_self)]
 pub struct ChunkUniform {
     pub voxel_size: Vec4,
     pub camera_pos: Vec4,
+    pub center_to_edge: Vec4,
+    pub voxel_texture: Handle<Texture>,
 }
 
 unsafe impl Byteable for ChunkUniform {}
@@ -55,19 +58,19 @@ unsafe impl Byteable for ChunkUniform {}
 #[derive(Debug)]
 pub struct InstanceData {
     pub position: Vec4,
-    pub color: Vec4,
+    pub color: Color,
 }
 
 unsafe impl Byteable for InstanceData {}
 
 #[derive(RenderResources, RenderResource, Default, TypeUuid)]
 #[uuid = "57dc3500-27af-41af-9c49-acfd87e66330"]
-pub struct ChunkMaterial {
+pub struct ChunkInstances {
     #[render_resources(buffer)]
     pub instances: Vec<InstanceData>,
 }
 
-unsafe impl Byteable for ChunkMaterial {}
+unsafe impl Byteable for ChunkInstances {}
 
 pub fn chunk_uniform_camera(
     mut chunk_uniforms: ResMut<Assets<ChunkUniform>>,
@@ -91,6 +94,14 @@ impl Default for ChunkMesh {
     fn default() -> Self {
         Self {
             shape: PointN([16; 3]),
+        }
+    }
+}
+
+impl ChunkMesh {
+    pub fn new(size: i32) -> Self {
+        Self{
+            shape: PointN([size; 3]),
         }
     }
 }

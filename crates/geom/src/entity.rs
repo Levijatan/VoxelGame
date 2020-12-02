@@ -1,6 +1,6 @@
 use bevy::{prelude::{Draw, GlobalTransform, Handle, Mesh, Transform}, render::{render_graph::base::MainPass, pipeline::{PipelineSpecialization, RenderPipelines, RenderPipeline}}, ecs::Bundle};
 
-use crate::chunk::{ChunkMaterial, ChunkUniform};
+use crate::chunk::{ChunkInstances, ChunkUniform};
 
 #[derive(Bundle)]
 pub struct GeomBundle {
@@ -10,7 +10,7 @@ pub struct GeomBundle {
     pub render_pipelines: RenderPipelines,
     pub transform: Transform,
     pub global_transform: GlobalTransform,
-    pub material: ChunkMaterial,
+    pub instances: ChunkInstances,
     pub uniform: Handle<ChunkUniform>,
 }
 
@@ -26,7 +26,7 @@ impl Default for GeomBundle {
             draw: Default::default(),
             transform: Default::default(),
             global_transform: Default::default(),
-            material: Default::default(),
+            instances: Default::default(),
             uniform: Default::default(),
         }
     }
