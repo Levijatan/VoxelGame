@@ -6,7 +6,7 @@ use bevy::{asset::{Assets, Handle}, core::Byteable, prelude::Texture, ecs::{ResM
         camera::Camera,
         mesh::Mesh,
         color::Color,
-    }, transform::components::GlobalTransform, type_registry::TypeUuid};
+    }, transform::components::GlobalTransform, reflect::TypeUuid};
 use building_blocks::core::{Point3i, PointN};
 
 pub const NUM_CUBE_VERTICES: usize = 8;

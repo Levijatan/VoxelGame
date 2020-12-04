@@ -6,7 +6,7 @@ use bevy::{
         render_graph::{RenderGraph, AssetRenderResourcesNode, base, RenderResourcesNode},
         shader::{Shader, ShaderStages, ShaderStage},
     },
-    type_registry::TypeUuid,
+    reflect::TypeUuid,
     ecs::ResMut,
 };
 

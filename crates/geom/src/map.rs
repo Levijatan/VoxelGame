@@ -1,4 +1,4 @@
-use bevy::{asset::Handle, ecs::Bundle, render::mesh::Mesh, type_registry::TypeUuid};
+use bevy::{asset::Handle, ecs::Bundle, render::mesh::Mesh, reflect::TypeUuid};
 use building_blocks::{prelude::Chunk3, core::Extent3i, core::Point3i, prelude::ChunkMap3};
 
 pub trait MapType{

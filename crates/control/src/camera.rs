@@ -143,16 +143,18 @@ pub fn update_camera_system(
 ) {
     use std::f32::consts::FRAC_PI_2;
     for (_tag, mut transform, mut yaw, mut pitch) in query.iter_mut() {
+
+        let dt = time.delta_seconds();
         
         let (yaw_sin, yaw_cos) = yaw.sin_cos();
         let forward = vec3(yaw_cos, 0.0, yaw_sin).normalize();
         let right = vec3(-yaw_sin, 0.0, yaw_cos).normalize();
-        transform.translation += forward * (controller.amount_forward - controller.amount_backward) * controller.speed * time.delta_seconds;
-        transform.translation += right * (controller.amount_right - controller.amount_left) * controller.speed * time.delta_seconds;
-        transform.translation.y += (controller.amount_up - controller.amount_down) * controller.speed * time.delta_seconds;
+        transform.translation += forward * (controller.amount_forward - controller.amount_backward) * controller.speed * dt;
+        transform.translation += right * (controller.amount_right - controller.amount_left) * controller.speed * dt;
+        transform.translation.y += (controller.amount_up - controller.amount_down) * controller.speed * dt;
 
-        yaw.0 += controller.rotate_horizontal * controller.sensitivity * time.delta_seconds;
-        pitch.0 += -controller.rotate_vertical * controller.sensitivity * time.delta_seconds;
+        yaw.0 += controller.rotate_horizontal * controller.sensitivity * dt;
+        pitch.0 += -controller.rotate_vertical * controller.sensitivity * dt;
         
         if pitch.0 < -FRAC_PI_2 {
             pitch.0 = -FRAC_PI_2;

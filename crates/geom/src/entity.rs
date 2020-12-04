@@ -1,4 +1,4 @@
-use bevy::{prelude::{Draw, GlobalTransform, Handle, Mesh, Transform}, render::{render_graph::base::MainPass, pipeline::{PipelineSpecialization, RenderPipelines, RenderPipeline}}, ecs::Bundle};
+use bevy::{ecs::Bundle, prelude::{GlobalTransform, Handle, Mesh, Transform}, render::{draw::Draw, pipeline::{PipelineSpecialization, RenderPipelines, RenderPipeline}, render_graph::base::MainPass}};
 
 use crate::chunk::{ChunkInstances, ChunkUniform};
 

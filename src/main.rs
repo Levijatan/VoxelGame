@@ -10,7 +10,7 @@ fn setup(
     asset_server: Res<AssetServer>,
 ) {
     let test_amount = 1;
-    let size = 3;
+    let size = 16;
     let chunk_size = size as f32;
     let voxel_size = 1.0 / chunk_size;
     let voxel_diag = 0.5 * voxel_size * chunk_size;
@@ -33,15 +33,13 @@ fn setup(
     for xc in 0..test_amount {
         for zc in 0..test_amount {
             let mut instances = Vec::new();
-            for x in 0..size {
-                for y in 0..size  {
-                    for z in 0..size  {
-                        if rand::random::<bool>() {
+            for x in 8..size {
+                for y in 8..size  {
+                    for z in 8..size  {
                             instances.push(geom::chunk::InstanceData{
                                 position: Vec4::new(x as f32, y as f32, z as f32, 1.0),
                                 color: Color::GREEN,
                             });
-                        }
                     }
                 }
             }
