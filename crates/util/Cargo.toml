@@ -9,4 +9,7 @@ edition = "2018"
 [dependencies]
 noise = "0.6.0"
 image = "0.23.12"
+bitvec = "0.19.4"
+arrayvec = "0.5.2"
+rand = "0.7.3"
 bevy = { git = "https://github.com/bevyengine/bevy" }

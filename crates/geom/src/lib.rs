@@ -11,6 +11,7 @@ use bevy::{
 };
 
 pub mod chunk;
+pub mod chunk_octree;
 pub mod entity;
 pub mod map;
 
