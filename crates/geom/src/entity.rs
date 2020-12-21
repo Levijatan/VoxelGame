@@ -18,7 +18,7 @@ impl Default for GeomBundle {
     fn default() -> Self {
         Self {
             render_pipelines: RenderPipelines::from_pipelines(vec![RenderPipeline::specialized(
-                crate::PIPELINE_HANDLE,
+                crate::PIPELINE_HANDLE.typed(),
                 PipelineSpecialization::default(),
             )]),
             mesh: Default::default(),

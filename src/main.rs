@@ -74,14 +74,15 @@ fn setup(
         .with_bundle((chunk_uniform, control::camera::MainTag{}));
 }
 
+#[bevy_main]
 fn main() {
     App::build()
         .add_resource(Msaa { samples: 4 })
         .add_plugins(DefaultPlugins)
         .add_plugin(control::input::InputPlugin)
         .add_plugin(geom::GeomPlugin)
-        .add_startup_system(setup)
-        .add_system(exit_on_esc_system)
+        .add_startup_system(setup.system())
+        .add_system(exit_on_esc_system.system())
         .run();
 }
 

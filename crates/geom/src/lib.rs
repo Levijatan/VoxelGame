@@ -1,5 +1,5 @@
 use bevy::{
-    asset::{Assets, Handle, AddAsset},
+    asset::{Assets, HandleUntyped, AddAsset},
     app::{Plugin, AppBuilder},
     render::{
         pipeline::PipelineDescriptor,
@@ -9,14 +9,14 @@ use bevy::{
     reflect::TypeUuid,
     ecs::ResMut,
 };
+use bevy::prelude::IntoSystem;
 
 pub mod chunk;
 pub mod chunk_octree;
 pub mod entity;
-pub mod map;
 
-pub const PIPELINE_HANDLE: Handle<PipelineDescriptor>
-    = Handle::weak_from_u64(PipelineDescriptor::TYPE_UUID, 17626092015219607069);
+pub const PIPELINE_HANDLE: HandleUntyped
+    = HandleUntyped ::weak_from_u64(PipelineDescriptor::TYPE_UUID, 17626092015219607069);
 
 const VERTEX_SHADER: &str = include_str!("./shaders/chunk.vert");
 const FRAGMENT_SHADER: &str = include_str!("./shaders/chunk.frag");
@@ -28,9 +28,8 @@ impl Plugin for GeomPlugin
 {
     fn build(&self, app: &mut AppBuilder) {
         app.add_asset::<chunk::ChunkUniform>()
-            .add_asset::<map::ChunkMap3U32>()
-            .add_startup_system(setup)
-            .add_system(chunk::chunk_uniform_camera);
+            .add_startup_system(setup.system())
+            .add_system(chunk::chunk_uniform_camera.system());
     }
 }
 

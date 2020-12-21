@@ -192,7 +192,7 @@ impl Default for CameraBundle {
         let pitch = Pitch(pitch_f.to_radians());
         Self {
             camera: Camera {
-                name: Some(bevy::render::render_graph::base::camera::CAMERA3D.to_string()),
+                name: Some(bevy::render::render_graph::base::camera::CAMERA_3D.to_string()),
                 ..Camera::default()
             },
             perspective_projection: PerspectiveProjection::default(),
