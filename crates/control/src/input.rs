@@ -8,6 +8,7 @@ use bevy::{prelude::AppBuilder, app::{
         },
         mouse::MouseMotion,
     }, prelude::Plugin};
+use bevy::prelude::IntoSystem;
 
 #[derive(Default)]
 struct State {
@@ -37,7 +38,7 @@ impl Plugin for InputPlugin {
     fn build(&self, app: &mut AppBuilder) {
         app.init_resource::<State>()
             .init_resource::<super::camera::Controller>()
-            .add_system_to_stage_front(bevy::app::stage::PRE_UPDATE, system)
-            .add_system_to_stage_front(bevy::app::stage::PRE_UPDATE, super::camera::update_camera_system);
+            .add_system_to_stage(bevy::app::stage::PRE_UPDATE, system.system())
+            .add_system_to_stage(bevy::app::stage::PRE_UPDATE, super::camera::update_camera_system.system());
     }
 }

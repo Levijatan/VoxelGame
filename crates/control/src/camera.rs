@@ -1,21 +1,13 @@
 
 
-use bevy::{
-    core::Time,
-    ecs::{ResMut, Res, Mut, Bundle},
-    input::{keyboard::KeyboardInput, mouse::MouseMotion},
-    ecs::Query, math::{Vec3, vec3},
-    prelude::KeyCode, prelude::{
+use bevy::{core::Time, ecs::{ResMut, Res, Bundle}, ecs::{Query, With}, input::{keyboard::KeyboardInput, mouse::MouseMotion}, math::{Vec3, vec3}, prelude::KeyCode, prelude::{
         Transform,
         GlobalTransform,
-    },
-    render::camera::{
+    }, render::camera::{
         Camera,
         PerspectiveProjection,
         VisibleEntities,
-
-    },
-};
+    }};
 use std::ops::{Deref, DerefMut};
 
 pub struct MainTag {}
@@ -139,10 +131,10 @@ impl Controller {
 pub fn update_camera_system(
     mut controller: ResMut<Controller>,
     time: Res<Time>,
-    mut query: Query<(&MainTag, Mut<Transform>, Mut<Yaw>, Mut<Pitch>)>
+    mut query: Query<(&mut Transform, &mut Yaw, &mut Pitch), With<MainTag>>
 ) {
     use std::f32::consts::FRAC_PI_2;
-    for (_tag, mut transform, mut yaw, mut pitch) in query.iter_mut() {
+    for (mut transform, mut yaw, mut pitch) in query.iter_mut() {
 
         let dt = time.delta_seconds();
         
@@ -192,7 +184,7 @@ impl Default for CameraBundle {
         let pitch = Pitch(pitch_f.to_radians());
         Self {
             camera: Camera {
-                name: Some(bevy::render::render_graph::base::camera::CAMERA3D.to_string()),
+                name: Some(bevy::render::render_graph::base::camera::CAMERA_3D.to_string()),
                 ..Camera::default()
             },
             perspective_projection: PerspectiveProjection::default(),
